@@ -4,13 +4,12 @@ import com.mifos.api.DataManager;
 import com.mifos.mifosxdroid.base.BasePresenter;
 import com.mifos.objects.accounts.loan.Loans;
 import com.mifos.objects.organisation.LoanProducts;
+import com.mifos.objects.templates.loans.GroupLoanTemplate;
 import com.mifos.services.data.GroupLoanPayload;
 
 import java.util.List;
 
 import javax.inject.Inject;
-
-import okhttp3.ResponseBody;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -75,7 +74,7 @@ public class GroupLoanAccountPresenter extends BasePresenter<GroupLoanAccountMvp
         mSubscription = mDataManager.getGroupLoansAccountTemplate(groupId, productId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<ResponseBody>() {
+                .subscribe(new Subscriber<GroupLoanTemplate>() {
                     @Override
                     public void onCompleted() {
                         getMvpView().showProgressbar(false);
@@ -88,9 +87,9 @@ public class GroupLoanAccountPresenter extends BasePresenter<GroupLoanAccountMvp
                     }
 
                     @Override
-                    public void onNext(ResponseBody response) {
+                    public void onNext(GroupLoanTemplate groupLoanTemplate) {
                         getMvpView().showProgressbar(false);
-                        getMvpView().showLoanPurposeSpinner(response);
+                        getMvpView().showLoanPurposeSpinner(groupLoanTemplate);
 
                     }
                 });
