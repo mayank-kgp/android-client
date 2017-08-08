@@ -10,6 +10,7 @@ import com.mifos.objects.client.Page;
 import com.mifos.objects.group.Center;
 import com.mifos.objects.group.CenterDate;
 import com.mifos.objects.group.CenterWithAssociations;
+import com.mifos.objects.group.CenterWithAssociations_Table;
 import com.mifos.objects.group.Group;
 import com.mifos.objects.group.Group_Table;
 import com.mifos.objects.response.SaveResponse;
@@ -148,6 +149,23 @@ public class DatabaseHelperCenter {
                 }
                 center.save();
                 return Observable.just(center);
+            }
+        });
+    }
+
+    public Observable<CenterWithAssociations> saveCentersGroupAndMeeting(final CenterWithAssociations centerWithAssociations) {
+        return Observable.defer(new Func0<Observable<CenterWithAssociations>>() {
+            @Override
+            public Observable<CenterWithAssociations> call() {
+                if (centerWithAssociations.getActivationDate().size() != 0) {
+                    CenterDate centerDate = new CenterDate(centerWithAssociations.getId(), 0,
+                            centerWithAssociations.getActivationDate().get(0),
+                            centerWithAssociations.getActivationDate().get(1),
+                            centerWithAssociations.getActivationDate().get(2));
+                    centerWithAssociations.setCenterDate(centerDate);
+                }
+                centerWithAssociations.save();
+                return Observable.just(centerWithAssociations);
             }
         });
     }

@@ -9,6 +9,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+import com.mifos.api.local.MifosBaseModel;
+import com.mifos.api.local.MifosDatabase;
+import com.mifos.mifosxdroid.core.MifosBaseFragment;
+import com.raizlabs.android.dbflow.annotation.ModelContainer;
+import com.raizlabs.android.dbflow.annotation.Table;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,29 +21,31 @@ import java.util.List;
 /**
  * Created by ishankhanna on 16/07/14.
  */
-public class CollectionMeetingCalendar implements Parcelable {
+@Table(database = MifosDatabase.class)
+@ModelContainer
+public class CollectionMeetingCalendar extends MifosBaseModel implements Parcelable {
 
-    private Integer id;
-    private Integer calendarInstanceId;
-    private Integer entityId;
-    private EntityType entityType;
-    private String title;
-    private List<Integer> startDate = new ArrayList<Integer>();
-    private Integer duration;
-    private EntityType type;
-    private Boolean repeating;
-    private String recurrence;
+    Integer id;
+    Integer calendarInstanceId;
+    Integer entityId;
+    EntityType entityType;
+    String title;
+    List<Integer> startDate = new ArrayList<Integer>();
+    Integer duration;
+    EntityType type;
+    Boolean repeating;
+    String recurrence;
 
     @SerializedName("frequency")
-    private EntityType frequency;
+    EntityType frequency;
 
-    private Integer interval;
+    Integer interval;
 
     @SerializedName("repeatsOnNthDayOfMonth")
-    private EntityType repeatsOnDay;
+    EntityType repeatsOnDay;
 
-    private Integer firstReminder;
-    private Integer secondReminder;
+    Integer firstReminder;
+    Integer secondReminder;
     private List<List<Integer>> recurringDates = new ArrayList<>();
     private List<List<Integer>> nextTenRecurringDates = new ArrayList<>();
     private String humanReadable;

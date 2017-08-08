@@ -1,5 +1,7 @@
 package com.mifos.mifosxdroid.online.centerdetails;
 
+import android.util.Log;
+
 import com.mifos.api.datamanager.DataManagerCenter;
 import com.mifos.api.datamanager.DataManagerRunReport;
 import com.mifos.mifosxdroid.R;
@@ -58,6 +60,7 @@ public class CenterDetailsPresenter extends BasePresenter<CenterDetailsMvpView> 
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.d("mayank", e.toString());
                         getMvpView().showProgressbar(false);
                         getMvpView().showErrorMessage(R.string.failed_to_fetch_Group_and_meeting);
                     }

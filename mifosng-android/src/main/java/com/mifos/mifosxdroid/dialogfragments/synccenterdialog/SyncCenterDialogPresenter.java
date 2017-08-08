@@ -183,7 +183,7 @@ public class SyncCenterDialogPresenter extends BasePresenter<SyncCenterDialogMvp
      *
      * @param centerId Center Id
      */
-    public void syncCenterAccounts(int centerId) {
+    public void syncCenterAccounts(final int centerId) {
         checkViewAttached();
         mSubscriptions.add(mDataManagerCenter.syncCenterAccounts(centerId)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -215,6 +215,35 @@ public class SyncCenterDialogPresenter extends BasePresenter<SyncCenterDialogMvp
                         //Updating UI
                         getMvpView().setMaxSingleSyncCenterProgressBar(mLoanAccountList.size() +
                                 mSavingsAccountList.size() + mMemberLoanAccountsList.size());
+                        syncCentersGroupAndMeeting(centerId);
+                    }
+                })
+        );
+    }
+
+    public void syncCentersGroupAndMeeting(int centerId) {
+        checkViewAttached();
+        mSubscriptions.add(mDataManagerCenter.syncCentersGroupAndMeeting(centerId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<CenterWithAssociations>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getMvpView().showError(R.string.failed_to_sync_centeraccounts);
+
+                        //Updating UI
+                        mFailedSyncCenter.add(mCenterList.get(mCenterSyncIndex));
+                        getMvpView().showSyncedFailedCenters(mFailedSyncCenter.size());
+                        mCenterSyncIndex = mCenterSyncIndex + 1;
+                        checkNetworkConnectionAndSyncCenter();
+                    }
+
+                    @Override
+                    public void onNext(CenterWithAssociations centerWithAssociations) {
                         checkAccountsSyncStatusAndSyncAccounts();
                     }
                 })

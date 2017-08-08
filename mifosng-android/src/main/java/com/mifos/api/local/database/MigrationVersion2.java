@@ -4,6 +4,7 @@ import com.mifos.api.local.MifosDatabase;
 import com.mifos.objects.accounts.loan.LoanAccount;
 import com.mifos.objects.accounts.savings.SavingsAccount;
 import com.mifos.objects.group.Center;
+import com.mifos.objects.group.CenterWithAssociations;
 import com.raizlabs.android.dbflow.annotation.Migration;
 import com.raizlabs.android.dbflow.sql.SQLiteType;
 import com.raizlabs.android.dbflow.sql.migration.AlterTableMigration;
