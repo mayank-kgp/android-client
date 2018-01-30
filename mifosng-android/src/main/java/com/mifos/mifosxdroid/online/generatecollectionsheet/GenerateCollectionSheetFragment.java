@@ -142,6 +142,7 @@ public class GenerateCollectionSheetFragment extends MifosBaseFragment
     public static GenerateCollectionSheetFragment newInstance() {
         GenerateCollectionSheetFragment generateCollectionSheetFragment = new
                 GenerateCollectionSheetFragment();
+        String "change 1";
         return generateCollectionSheetFragment;
     }
 
